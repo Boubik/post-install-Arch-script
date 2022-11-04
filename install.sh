@@ -18,6 +18,7 @@ gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize
 
 # update and install pamac
 echo -e "\n\nInstaling pamac"
+sudo sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 sudo pacman -Suy --needed base-devel git
 git clone https://aur.archlinux.org/yay.git
 cd yay
@@ -28,12 +29,11 @@ yay -Sy pamac-flatpak-gnome
 
 # install core packages
 echo -e "\n\nInstaling core packages"
-sudo pacman -Sy firefox git neofetch speedtest-cli net-tools nano wget curl seahorse
+sudo pacman -Sy firefox git neofetch speedtest-cli net-tools nano wget curl seahorse grub efibootmgr grub-customizer
 
 # install zsh with manjaro settings
 echo -e "\n\nSeting up zsh"
 pacman -Sy zsh manjaro-zsh-config-git
-cd
 echo "# Use powerline
 USE_POWERLINE=\"true\"
 # Source manjaro-zsh-configuration
@@ -45,14 +45,22 @@ if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
   source /usr/share/zsh/manjaro-zsh-prompt
 fi
 
-alias nano=\"nano -c\"" > .zshrc
+alias nano=\"nano -c\"" > ~/.zshrc
 sudo -E usermod -s $(which zsh) $kek
 sudo usermod -s $(which zsh) root
 
 
+# user interapt
+echo -e "\n\nPlease Change pamac setting. Enable AUR and Flatpak"
+read
+
+
 # install other packages
 echo -e "\n\nInstaling your packages"
-sudo pamac install deluge discord evolution filezilla flatseal gedit gparted hplip kodi krita librewolf lollypop lutris mysql-workbench jdk-openjdk java-enviroment-common java-runtime-common jre-openjdk jde-openjdk-headless protonup-qt signal-desktop vlc appimagelauncher phpmyadmin mariadb mariadb-clients betterdiscordctl blobsaver-bin grub-btrfs btrfs-autosnap btrfs-assistant cider cpu-x cura-bin dconf-editor discover-overlay dotnet-runtime dotnet-sdk dropbox emote etcher-bin google-chrome heroic-games-launcher wine winetricks wine-gecko leagueoflegends-git opera minecraft-launcher nautilus-admin nautilus-empty-file btop nfs-utils onedrive onedrivegui-git onlyoffice opera-ffmpeg-codecs php php-apache php-sqlite realvnc-vnc-server realvnc-vnc-viewer spotify-adblock teamviewer tor torsocks vulkan-geaders indicator-sound-switcher runebook-bin ventoy
+sudo pamac install python-gpgme deluge discord evolution filezilla flatseal gedit gparted hplip kodi krita lollypop lutris mysql-workbench jdk-openjdk java-environment-common java-runtime-common jre-openjdk jre-openjdk-headless protonup-qt signal-desktop vlc appimagelauncher phpmyadmin mariadb mariadb-clients betterdiscordctl blobsaver-bin grub-btrfs btrfs-autosnap btrfs-assistant pnpm-bin cpu-x cura-bin dconf-editor discover-overlay dotnet-runtime dotnet-sdk emote etcher-bin google-chrome heroic-games-launcher-bin wine winetricks wine-gecko leagueoflegends-git opera minecraft-launcher nautilus-admin nautilus-empty-file btop nfs-utils onedrive onedrivegui-git onlyoffice-bin opera-ffmpeg-codecs php php-apache php-sqlite realvnc-vnc-server realvnc-vnc-viewer teamviewer tor torsocks vulkan-headers indicator-sound-switcher runebook-bin ventoy-bin lib32-nvidia-utils
+yay -Sy dropbox spotify-adblock
+rm -rf ~/.dropbox-dist
+install -dm0 ~/dropbox-dist
 
 # remove vim
 echo -e "\n\nRemuving vim"
@@ -65,6 +73,7 @@ sudo cp -r * /boot/grub/
 cd ..
 cd ..
 sudo rm -r dotfiles
+sudo cp grub /etc/default/grub
 
 # install and setup virt-manager
 echo -e "\n\nInstaling virtual manager"
@@ -83,7 +92,6 @@ sudo virsh net-autostart default
 
 # install steam
 echo -e "\n\nInstaling steam"
-sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 sudo pacman -Sy steam
 
 # add templates
@@ -107,7 +115,7 @@ sudo mkdir /mnt/Nas-pi-celydisk
 sudo -E sh -c 'echo -e "//192.168.1.199/homes /mnt/Nas-pi-celydisk cifs username=$nasusr,password=$naspaswd,rw,uid=1000,iocharset=utf8,noperm,file_mode=0755,dir_mode=0755,users 0 0" >> /etc/fstab'
 sudo mkdir /mnt/Data
 sudo sh -c 'echo -e "/dev/disk/by-uuid/8A3208AD32089FF5 /mnt/Data ntfs-3g rw,uid=1000,iocharset=utf8,noperm,file_mode=0755,dir_mode=0755,users 0 0" >> /etc/fstab'
-sudo systemctl deamon-reload
+sudo systemctl daemon-reload
 mount -a
 
 # copy configs
