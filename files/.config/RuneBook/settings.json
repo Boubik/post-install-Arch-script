@@ -1,0 +1,16 @@
+{
+	"config": {
+		"name": "config",
+		"cwd": "/home/boubik/.config/RuneBook",
+		"ext": ".json"
+	},
+	"lang": "cz",
+	"minimizetotray": false,
+	"changelogversion": "1.16.1",
+	"leaguepath": "/home/boubik/.local/share/leagueoflegends/drive_c/Riot Games/League of Legends/LeagueClient.exe",
+	"pathdiscovery": false,
+	"autochamp": true,
+	"favautoupload": false,
+	"lasttab": "blitzgg",
+	"darktheme": true
+}
