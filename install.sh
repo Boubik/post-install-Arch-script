@@ -25,15 +25,19 @@ cd yay
 makepkg -si
 cd ..
 sudo rm -r yay
-yay -Sy pamac-flatpak-gnome
+sudo yay -Sy pamac-flatpak-gnome
 
 # install core packages
 echo -e "\n\nInstaling core packages"
 sudo pacman -Sy firefox git neofetch speedtest-cli net-tools nano wget curl seahorse grub efibootmgr grub-customizer
 
+# user interapt
+echo -e "\n\nPlease Change pamac setting. Enable AUR and Flatpak"
+read
+
 # install zsh with manjaro settings
 echo -e "\n\nSeting up zsh"
-pacman -Sy zsh manjaro-zsh-config-git
+sudo pamac install zsh manjaro-zsh-config-git
 echo "# Use powerline
 USE_POWERLINE=\"true\"
 # Source manjaro-zsh-configuration
@@ -49,15 +53,9 @@ alias nano=\"nano -c\"" > ~/.zshrc
 sudo -E usermod -s $(which zsh) $kek
 sudo usermod -s $(which zsh) root
 
-
-# user interapt
-echo -e "\n\nPlease Change pamac setting. Enable AUR and Flatpak"
-read
-
-
 # install other packages
 echo -e "\n\nInstaling your packages"
-sudo pamac install python-gpgme deluge discord evolution filezilla flatseal gedit gparted hplip kodi krita lollypop lutris mysql-workbench jdk-openjdk java-environment-common java-runtime-common jre-openjdk jre-openjdk-headless protonup-qt signal-desktop vlc appimagelauncher phpmyadmin mariadb mariadb-clients betterdiscordctl blobsaver-bin grub-btrfs btrfs-autosnap btrfs-assistant pnpm-bin cpu-x cura-bin dconf-editor discover-overlay dotnet-runtime dotnet-sdk emote etcher-bin google-chrome heroic-games-launcher-bin wine winetricks wine-gecko leagueoflegends-git opera minecraft-launcher nautilus-admin nautilus-empty-file btop nfs-utils onedrive onedrivegui-git onlyoffice-bin opera-ffmpeg-codecs php php-apache php-sqlite realvnc-vnc-server realvnc-vnc-viewer teamviewer tor torsocks vulkan-headers indicator-sound-switcher runebook-bin ventoy-bin lib32-nvidia-utils
+sudo pamac install python-gpgme deluge discord evolution filezilla flatseal gedit gparted hplip kodi krita lollypop lutris mysql-workbench jdk-openjdk java-environment-common java-runtime-common jre-openjdk jre-openjdk-headless protonup-qt signal-desktop vlc appimagelauncher phpmyadmin mariadb mariadb-clients betterdiscordctl blobsaver-bin grub-btrfs btrfs-autosnap btrfs-assistant pnpm-bin cpu-x cura-bin dconf-editor discover-overlay dotnet-runtime dotnet-sdk emote etcher-bin google-chrome heroic-games-launcher-bin wine winetricks wine-gecko leagueoflegends-git opera minecraft-launcher nautilus-admin-git nautilus-empty-file btop nfs-utils onedrive onedrivegui-git onlyoffice-bin opera-ffmpeg-codecs php php-apache php-sqlite realvnc-vnc-server realvnc-vnc-viewer teamviewer tor torsocks vulkan-headers indicator-sound-switcher runebook-bin ventoy-bin lib32-nvidia-utils
 yay -Sy dropbox spotify-adblock
 rm -rf ~/.dropbox-dist
 install -dm0 ~/dropbox-dist
