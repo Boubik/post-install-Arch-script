@@ -56,7 +56,7 @@ sudo usermod -s $(which zsh) root
 # install other packages
 echo -e "\n\nInstaling your packages"
 sudo pamac install python-gpgme deluge discord evolution filezilla flatseal gedit gparted hplip kodi krita lollypop lutris mysql-workbench jdk-openjdk java-environment-common java-runtime-common jre-openjdk jre-openjdk-headless protonup-qt signal-desktop vlc appimagelauncher phpmyadmin mariadb mariadb-clients betterdiscordctl blobsaver-bin grub-btrfs btrfs-autosnap btrfs-assistant pnpm-bin cpu-x cura-bin dconf-editor discover-overlay dotnet-runtime dotnet-sdk emote etcher-bin google-chrome heroic-games-launcher-bin wine winetricks wine-gecko leagueoflegends-git opera minecraft-launcher nautilus-admin-git nautilus-empty-file btop nfs-utils onedrive onedrivegui-git onlyoffice-bin opera-ffmpeg-codecs php php-apache php-sqlite realvnc-vnc-server realvnc-vnc-viewer teamviewer tor torsocks vulkan-headers indicator-sound-switcher runebook-bin ventoy-bin lib32-nvidia-utils
-yay -Sy dropbox spotify-adblock
+yay -Sy dropbox spotify-adblock ftba
 rm -rf ~/.dropbox-dist
 install -dm0 ~/dropbox-dist
 
