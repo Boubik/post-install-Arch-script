@@ -25,11 +25,12 @@ cd yay
 makepkg -si
 cd ..
 sudo rm -r yay
-sudo yay -Sy pamac-flatpak-gnome
+yay -Sy pamac-flatpak-gnome
 
 # install core packages
 echo -e "\n\nInstaling core packages"
-sudo pacman -Sy firefox git neofetch speedtest-cli net-tools nano wget curl seahorse grub efibootmgr grub-customizer
+sudo pacman -Sy firefox git neofetch speedtest-cli net-tools nano wget curl seahorse grub efibootmgr grub-customizer grub-btrfs
+yay -Sy update-grub
 
 # user interapt
 echo -e "\n\nPlease Change pamac setting. Enable AUR and Flatpak"
@@ -72,6 +73,7 @@ cd ..
 cd ..
 sudo rm -r dotfiles
 sudo cp grub /etc/default/grub
+sudo update-grub
 
 # install and setup virt-manager
 echo -e "\n\nInstaling virtual manager"
