@@ -75,6 +75,15 @@ sudo rm -r dotfiles
 sudo cp grub /etc/default/grub
 sudo update-grub
 
+# setup codeserver
+echo -e "\n\nCode-server setup"
+echo -e "Enter your password:"
+read -s codepaswd
+export codepaswd
+sudo pamac install code-server
+sudo -E sh -c 'echo -e "[Unit]\nDescription=Code Server\n\n[Service]\nWorkingDirectory=/home/$kek/\nUser=$kek\nExecStart= code-server\nRestart=on-failure\nRestartSec=10\n\n[Install]\nWantedBy=multi-user.target" > /etc/systemd/system/codeserver.service'
+sudo -E sh -c 'echo -e "bind-addr: 0.0.0.0:4443\nauth: password\npassword: $codepaswd\ncert: false" > ~/.config/code-server/config.yaml'
+
 # install and setup virt-manager
 echo -e "\n\nInstaling virtual manager"
 sudo pamac install virt-manager qemu-desktop libvirt edk2-ovmf dnsmasq iptables-nft
