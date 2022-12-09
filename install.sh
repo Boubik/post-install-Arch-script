@@ -29,7 +29,7 @@ yay -Sy pamac-flatpak-gnome
 
 # install core packages
 echo -e "\n\nInstaling core packages"
-sudo pacman -Sy firefox git neofetch speedtest-cli net-tools nano wget curl seahorse grub efibootmgr grub-customizer grub-btrfs
+sudo pacman -Sy firefox git neofetch speedtest-cli net-tools nano wget curl seahorse grub efibootmgr grub-customizer grub-btrfs ntfs-3g fuse cronie
 yay -Sy update-grub
 
 # user interapt
@@ -56,10 +56,19 @@ sudo usermod -s $(which zsh) root
 
 # install other packages
 echo -e "\n\nInstaling your packages"
-sudo pamac install python-gpgme deluge discord evolution filezilla flatseal gedit gparted hplip kodi krita lollypop lutris mysql-workbench jdk-openjdk java-environment-common java-runtime-common jre-openjdk jre-openjdk-headless protonup-qt signal-desktop vlc appimagelauncher phpmyadmin mariadb mariadb-clients betterdiscordctl blobsaver-bin grub-btrfs btrfs-autosnap btrfs-assistant pnpm-bin cpu-x cura-bin dconf-editor discover-overlay dotnet-runtime dotnet-sdk emote etcher-bin google-chrome heroic-games-launcher-bin wine winetricks wine-gecko leagueoflegends-git opera minecraft-launcher nautilus-admin-git nautilus-empty-file btop nfs-utils onedrive onedrivegui-git onlyoffice-bin opera-ffmpeg-codecs php php-apache php-sqlite realvnc-vnc-server realvnc-vnc-viewer teamviewer tor torsocks vulkan-headers indicator-sound-switcher runebook-bin ventoy-bin lib32-nvidia-utils
-yay -Sy dropbox spotify-adblock ftba cider
+sudo pamac install python-gpgme deluge discord evolution filezilla flatseal gedit gparted hplip kodi krita lollypop lutris mysql-workbench jdk-openjdk java-environment-common java-runtime-common jre-openjdk jre-openjdk-headless protonup-qt signal-desktop vlc appimagelauncher phpmyadmin mariadb mariadb-clients betterdiscordctl blobsaver-bin  btrfs-snap btrfs-assistant pnpm-bin cpu-x cura-bin dconf-editor discover-overlay dotnet-runtime dotnet-sdk emote etcher-bin google-chrome heroic-games-launcher-bin wine winetricks wine-gecko leagueoflegends-git opera minecraft-launcher nautilus-admin-git nautilus-empty-file btop nfs-utils onedrive onedrivegui-git onlyoffice-bin opera-ffmpeg-codecs php php-apache php-sqlite realvnc-vnc-server lightdm libxcrypt lib32-libxcrypt libxcrypt-compat lib32-libxcrypt-compat realvnc-vnc-viewer teamviewer tor torsocks vulkan-headers indicator-sound-switcher runebook-bin ventoy-bin lib32-nvidia-utils
+yay -Sy dropbox spotify-adblock ftba cider extension-manager libgksu gksu libxcrypt-compat visual-studio-code-bin libgda libgda6
 rm -rf ~/.dropbox-dist
 install -dm0 ~/dropbox-dist
+
+# install wake on lan deamon
+echo -e "\n\nInstaling wake on lan deamon"
+yay -Sy wol-systemd
+echo -e "Enter network interface:"
+read -s interface
+export interface
+sudo -E systemctl enable wol@$interface
+sudo -E systemctl start wol@$interface
 
 # remove vim
 echo -e "\n\nRemuving vim"
@@ -81,8 +90,20 @@ echo -e "Enter your password:"
 read -s codepaswd
 export codepaswd
 sudo pamac install code-server
-sudo -E sh -c 'echo -e "[Unit]\nDescription=Code Server\n\n[Service]\nWorkingDirectory=/home/$kek/\nUser=$kek\nExecStart= code-server\nRestart=on-failure\nRestartSec=10\n\n[Install]\nWantedBy=multi-user.target" > /etc/systemd/system/codeserver.service'
+sudo pacman -Sy mkcert
+
+sudo systemctl daemon-reload
+sudo systemctl enable codeserver.service
+sudo systemctl start codeserver.service
+sudo systemctl stop codeserver.service
+sudo -E sh -c 'echo -e "[Unit]\nDescription=Code Server\n\n[Service]\nWorkingDirectory=/home/$kek/\nUser=$kek\nExecStart= code-server --cert .config/code-server/cert.pem --cert-key .config/code-server/certkey.pem\nRestart=on-failure\nRestartSec=10\n\n[Install]\nWantedBy=multi-user.target" > /etc/systemd/system/codeserver.service'
 sudo -E sh -c 'echo -e "bind-addr: 0.0.0.0:4443\nauth: password\npassword: $codepaswd\ncert: false" > ~/.config/code-server/config.yaml'
+mkcert -install
+mkcert 192.168.1.205
+mv 192.168.1.205.pem ~/.config/code-server/cert.pem
+mv 192.168.1.205-key.pem ~/.config/code-server/certkey.pem
+sudo systemctl daemon-reload
+sudo systemctl start codeserver.service
 
 # install and setup virt-manager
 echo -e "\n\nInstaling virtual manager"
@@ -134,6 +155,10 @@ sudo -E chown -R $kek:$kek ~/files
 cp -r ~/files/.config ~/
 cp -r ~/files/.local ~/
 sudo rm -r ~/files
+
+# setup vnc-server
+echo -e "\n\nSeting RealVNC server"
+sudo /usr/bin/vnclicensewiz
 
 # done
 echo -e "\n\nEveriting is setted up you shoud restart your computer (sudo reboot)"
