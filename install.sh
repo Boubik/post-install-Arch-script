@@ -29,7 +29,7 @@ yay -Sy pamac-flatpak-gnome
 
 # install core packages
 echo -e "\n\nInstaling core packages"
-sudo pacman -Sy firefox git neofetch speedtest-cli net-tools nano wget curl seahorse grub efibootmgr grub-customizer grub-btrfs ntfs-3g fuse cronie
+sudo pacman -Sy firefox git neofetch speedtest-cli net-tools nano wget curl seahorse grub efibootmgr grub-customizer grub-btrfs ntfs-3g fuse cronie moar
 yay -Sy update-grub
 
 # user interapt
