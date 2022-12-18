@@ -29,7 +29,7 @@ yay -Sy pamac-flatpak-gnome
 
 # install core packages
 echo -e "\n\nInstaling core packages"
-sudo pacman -Sy firefox git neofetch speedtest-cli net-tools nano wget curl seahorse grub efibootmgr grub-customizer grub-btrfs ntfs-3g fuse cronie moar
+sudo pacman -Sy firefox git neofetch speedtest-cli net-tools nano wget curl seahorse grub efibootmgr grub-customizer grub-btrfs ntfs-3g fuse cronie moar cups
 yay -Sy update-grub
 
 # user interapt
@@ -56,7 +56,7 @@ sudo usermod -s $(which zsh) root
 
 # install other packages
 echo -e "\n\nInstaling your packages"
-sudo pamac install python-gpgme deluge discord evolution filezilla flatseal gedit gparted hplip kodi krita lollypop lutris mysql-workbench jdk-openjdk java-environment-common java-runtime-common jre-openjdk jre-openjdk-headless protonup-qt signal-desktop vlc appimagelauncher phpmyadmin mariadb mariadb-clients betterdiscordctl blobsaver-bin  btrfs-snap btrfs-assistant pnpm-bin cpu-x cura-bin dconf-editor discover-overlay dotnet-runtime dotnet-sdk emote etcher-bin google-chrome heroic-games-launcher-bin wine winetricks wine-gecko leagueoflegends-git opera minecraft-launcher nautilus-admin-git nautilus-empty-file btop nfs-utils onedrive onedrivegui-git onlyoffice-bin opera-ffmpeg-codecs php php-apache php-sqlite realvnc-vnc-server lightdm libxcrypt lib32-libxcrypt libxcrypt-compat lib32-libxcrypt-compat realvnc-vnc-viewer teamviewer tor torsocks vulkan-headers indicator-sound-switcher runebook-bin ventoy-bin lib32-nvidia-utils
+sudo pamac install system-config-printer python-gpgme deluge discord evolution filezilla flatseal gedit gparted hplip kodi krita lollypop lutris mysql-workbench jdk-openjdk java-environment-common java-runtime-common jre-openjdk jre-openjdk-headless protonup-qt signal-desktop vlc appimagelauncher phpmyadmin mariadb mariadb-clients betterdiscordctl blobsaver-bin  btrfs-snap btrfs-assistant pnpm-bin cpu-x cura-bin dconf-editor discover-overlay dotnet-runtime dotnet-sdk emote etcher-bin google-chrome heroic-games-launcher-bin wine winetricks wine-gecko leagueoflegends-git opera minecraft-launcher nautilus-admin-git nautilus-empty-file btop nfs-utils onedrive onedrivegui-git onlyoffice-bin opera-ffmpeg-codecs php php-apache php-sqlite realvnc-vnc-server lightdm libxcrypt lib32-libxcrypt libxcrypt-compat lib32-libxcrypt-compat realvnc-vnc-viewer teamviewer tor torsocks vulkan-headers indicator-sound-switcher runebook-bin ventoy-bin lib32-nvidia-utils
 yay -Sy dropbox spotify-adblock ftba cider extension-manager libgksu gksu libxcrypt-compat visual-studio-code-bin libgda libgda6
 rm -rf ~/.dropbox-dist
 install -dm0 ~/dropbox-dist
@@ -83,6 +83,12 @@ cd ..
 sudo rm -r dotfiles
 sudo cp grub /etc/default/grub
 sudo update-grub
+
+# instaling printer drivers
+echo -e "\n\nInstaling printer drivers"
+sudo systemctl enable --now cups
+#sudo hp-setup -i
+
 
 # setup codeserver
 echo -e "\n\nCode-server setup"
